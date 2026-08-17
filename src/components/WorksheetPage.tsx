@@ -31,21 +31,16 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
   generationDate,
   onAnswerChange,
 }) => {
-  // Grid column classes
+  // Grid column classes (1, 2 or 3 columns)
   const getGridColsClass = (cols: number) => {
     switch (cols) {
-      case 2:
-        return 'grid-cols-1 sm:grid-cols-2 print:grid-cols-2';
+      case 1:
+        return 'grid-cols-1 print:grid-cols-1 max-w-md mx-auto';
       case 3:
         return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 print:grid-cols-3';
-      case 4:
-        return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-4 print:grid-cols-4';
-      case 5:
-        return 'grid-cols-2 sm:grid-cols-3 md:grid-cols-5 print:grid-cols-5';
-      case 6:
-        return 'grid-cols-2 sm:grid-cols-3 md:grid-cols-6 print:grid-cols-6';
+      case 2:
       default:
-        return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-4 print:grid-cols-4';
+        return 'grid-cols-1 sm:grid-cols-2 print:grid-cols-2';
     }
   };
 

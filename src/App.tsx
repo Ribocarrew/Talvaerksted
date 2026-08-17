@@ -44,7 +44,7 @@ export function App() {
   // Global generator state
   const [seed, setSeed] = useState<number>(() => Math.floor(Math.random() * 1e9));
   const [antalOpgaver, setAntalOpgaver] = useState<number>(24);
-  const [kolonner, setKolonner] = useState<number>(4);
+  const [kolonner, setKolonner] = useState<number>(2);
   const [raekkerPrSide, setRaekkerPrSide] = useState<number>(18);
   const [activePreset, setActivePreset] = useState<DifficultyPreset | null>('mellem');
   const [generationDate, setGenerationDate] = useState<string>(() =>
@@ -141,7 +141,7 @@ export function App() {
       try {
         setSeed(sharedState.seed);
         if (sharedState.antalOpgaver) setAntalOpgaver(sharedState.antalOpgaver);
-        if (sharedState.kolonner) setKolonner(sharedState.kolonner);
+        if (sharedState.kolonner) setKolonner(Math.min(3, Math.max(1, sharedState.kolonner)));
         if (sharedState.raekkerPrSide) setRaekkerPrSide(sharedState.raekkerPrSide);
 
         if (sharedState.aktive && typeof sharedState.aktive === 'object') {
