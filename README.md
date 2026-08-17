@@ -38,7 +38,7 @@ Interfacet er udformet som et **skandinavisk læringslaboratorium**:
 
 ```bash
 # 1. Klon repositoryet
-git clone https://github.com/jacobwitt/talvaerksted.git
+git clone https://github.com/Ribocarrew/Talvaerksted.git
 cd talvaerksted
 
 # 2. Installer afhængigheder
