@@ -12,7 +12,7 @@ import {
 // --- Addition / multiplikation ---
 export function genererAdditionMult(
   rng: () => number,
-  op: '+' | '×',
+  op: '+' | '·' | '×',
   params: Record<string, any>
 ): Opgave | null {
   const { antalLed = 2, talMin = 1, talMax = 100, negativtal = false } = params;
@@ -27,8 +27,8 @@ export function genererAdditionMult(
     for (let i = 1; i < tal.length; i++) {
       resultat = op === '+' ? resultat + tal[i] : resultat * tal[i];
     }
-    if (op === '×' && Math.abs(resultat) > talMax * talMax * 3) continue; // undgå urimeligt store facit
-    return { template: `${formaterUdtryk(tal, op)} = __`, facit: resultat, decimaler: 0 };
+    if ((op === '·' || op === '×') && Math.abs(resultat) > talMax * talMax * 3) continue; // undgå urimeligt store facit
+    return { template: `${formaterUdtryk(tal, op === '+' ? '+' : '·')} = __`, facit: resultat, decimaler: 0 };
   }
   return null;
 }
@@ -77,7 +77,7 @@ export function genererSubtraktion(
   return null;
 }
 
-// --- Division ---
+// --- Division (med dansk divisionstegn :) ---
 // Uden decimaltal: bygges BAGLÆNS (facit 2-12, gang op med divisorer 2-12),
 // så divisionen altid går exact op. Med decimaltal: to tal trækkes direkte,
 // kvotienten afrundes til 1 decimal, og forkastes hvis den tilfældigvis
@@ -108,7 +108,7 @@ export function genererDivision(
       }
       const tal = [p, ...divisorer];
       return {
-        template: `${tal.map((v) => formatTal(v, 0)).join(' ÷ ')} = __`,
+        template: `${tal.map((v) => formatTal(v, 0)).join(' : ')} = __`,
         facit,
         decimaler: 0,
       };
@@ -126,7 +126,7 @@ export function genererDivision(
         a = -a;
       }
       return {
-        template: `${formatTal(a, 0)} ÷ ${b} = __`,
+        template: `${formatTal(a, 0)} : ${b} = __`,
         facit,
         decimaler: 1,
       };
@@ -273,7 +273,7 @@ export function genererLigningEttrin(
     const b = tilfaeldigTal(rng, 2, 20, decimaltal, negativtal);
     const x = rund(a * b, dec);
     return {
-      template: `x ÷ ${a} = ${formatTal(b, dec)}, x = __`,
+      template: `x : ${a} = ${formatTal(b, dec)}, x = __`,
       facit: x,
       decimaler: dec,
     };

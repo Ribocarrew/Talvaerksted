@@ -52,15 +52,15 @@ export function formatTal(tal: number, decimaler?: number): string {
   return fortegn + Math.abs(v).toString().replace('.', ',');
 }
 
-// Negative faktorer i parentes, så "(−5) × 8" aldrig kan læses forkert.
+// Negative faktorer i parentes, så "(−5) · 8" aldrig kan læses forkert.
 export function formaterFaktor(v: number): string {
   return v < 0 ? `(${formatTal(v, 0)})` : formatTal(v, 0);
 }
 
-// Formaterer en liste led til et regnestykke med korrekt dansk fortegn,
+// Formaterer en liste led til et regnestykke med korrekt dansk fortegn og gangetegn (·),
 // fx [8, -3, 5] med '+' bliver "8 − 3 + 5", ikke "8 + -3 + 5".
 export function formaterUdtryk(tal: number[], op: string): string {
-  if (op === '×') return tal.map(formaterFaktor).join(' × ');
+  if (op === '·' || op === '×') return tal.map(formaterFaktor).join(' · ');
   let tekst = formatTal(tal[0], 0);
   for (let i = 1; i < tal.length; i++) {
     const v = tal[i];

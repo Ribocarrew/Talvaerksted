@@ -25,7 +25,7 @@ describe('Opgavemotor Verifikation', () => {
   const typerMedNegativ = [
     { name: 'Addition', fn: (rng: any) => genererAdditionMult(rng, '+', { antalLed: 3, talMin: 1, talMax: 50, negativtal: false }) },
     { name: 'Subtraktion', fn: (rng: any) => genererSubtraktion(rng, { antalLed: 3, talMin: 1, talMax: 50, negativtal: false }) },
-    { name: 'Multiplikation', fn: (rng: any) => genererAdditionMult(rng, '×', { antalLed: 2, talMin: 1, talMax: 10, negativtal: false }) },
+    { name: 'Multiplikation', fn: (rng: any) => genererAdditionMult(rng, '·', { antalLed: 2, talMin: 1, talMax: 10, negativtal: false }) },
     { name: 'Division (heltal)', fn: (rng: any) => genererDivision(rng, { antalLed: 2, talMax: 100, decimaltal: false, negativtal: false }) },
     { name: 'Division (decimal)', fn: (rng: any) => genererDivision(rng, { antalLed: 2, talMax: 100, decimaltal: true, negativtal: false }) },
     { name: 'Tabel', fn: (rng: any) => genererTabel(rng, { talMax: 10, negativtal: false }) },
@@ -54,7 +54,7 @@ describe('Opgavemotor Verifikation', () => {
   const typerMedNegativTrue = [
     { name: 'Addition (negativ)', fn: (rng: any) => genererAdditionMult(rng, '+', { antalLed: 2, talMin: 1, talMax: 50, negativtal: true }) },
     { name: 'Subtraktion (negativ)', fn: (rng: any) => genererSubtraktion(rng, { antalLed: 2, talMin: 1, talMax: 50, negativtal: true }) },
-    { name: 'Multiplikation (negativ)', fn: (rng: any) => genererAdditionMult(rng, '×', { antalLed: 2, talMin: 1, talMax: 10, negativtal: true }) },
+    { name: 'Multiplikation (negativ)', fn: (rng: any) => genererAdditionMult(rng, '·', { antalLed: 2, talMin: 1, talMax: 10, negativtal: true }) },
     { name: 'Division (negativ)', fn: (rng: any) => genererDivision(rng, { antalLed: 2, talMax: 100, decimaltal: false, negativtal: true }) },
     { name: 'Tabel (negativ)', fn: (rng: any) => genererTabel(rng, { talMax: 10, negativtal: true }) },
     { name: 'Ligning Ettrin (negativ)', fn: (rng: any) => genererLigningEttrin(rng, { talMin: 1, talMax: 20, decimaltal: false, negativtal: true }) },
@@ -92,9 +92,9 @@ describe('Opgavemotor Verifikation', () => {
         expect(opAdd!.facit).toBe(Number(a) + Number(b) + Number(c));
       }
 
-      const opMult = genererAdditionMult(rng, '×', { antalLed: 2, talMin: 1, talMax: 10, negativtal: false });
+      const opMult = genererAdditionMult(rng, '·', { antalLed: 2, talMin: 1, talMax: 10, negativtal: false });
       expect(opMult).not.toBeNull();
-      const matchMult = opMult!.template.match(/^(\d+) × (\d+) = __$/);
+      const matchMult = opMult!.template.match(/^(\d+) · (\d+) = __$/);
       if (matchMult) {
         const [, a, b] = matchMult;
         expect(opMult!.facit).toBe(Number(a) * Number(b));
