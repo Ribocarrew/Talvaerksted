@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #F5F5F4;        /* Paper Grey — primær baggrund, ALDRIG ren hvid */
+    --foreground: #1E293B;        /* Slate Ink — brødtekst og labels */
+    --primary: #0F766E;           /* Deep Teal — knapper, navigation, fokus */
+    --primary-foreground: #FFFFFF;
+    --secondary: #E7E5E4;
+    --secondary-foreground: #1E293B;
+    --accent: #D97706;            /* Warm Amber — bruges SPARSOMT, kun til highlights */
+    --accent-foreground: #FFFFFF;
+    --muted: #F1F5F9;
+    --muted-foreground: #475569;
+    --destructive: #DC2626;       /* Friction Red — kun fejl/konflikt, meget sparsomt */
+    --destructive-foreground: #FFFFFF;
+    --success: #16A34A;           /* Safety Green — bekræftelser, "korrekt"-markering */
+    --warning: #EAB308;           /* Reflection Yellow — refleksion/hjælpetekst, "stop og tænk" */
+    --border: #D6D3D1;
+    --input: #E7E5E4;
+    --ring: #0F766E;
+    --radius: 1.25rem;
+  }
+
+  .dark {
+    --background: #1B1D1C;        /* varm, mørk kulgrå */
+    --foreground: #E7E5E2;        /* varm off-white */
+    --primary: #2DD4BF;           /* lysere teal */
+    --primary-foreground: #0B1413;/* næsten-sort tekst på teal-knapper */
+    --secondary: #262A28;
+    --secondary-foreground: #E7E5E2;
+    --accent: #FBBF24;            /* gylden amber */
+    --accent-foreground: #1B1D1C;
+    --muted: #232725;
+    --muted-foreground: #A8ADA8;
+    --destructive: #F87171;
+    --destructive-foreground: #1B1D1C;
+    --success: #4ADE80;
+    --warning: #FDE047;
+    --border: rgba(45, 212, 191, 0.15);
+    --input: #262A28;
+    --ring: #2DD4BF;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Inter', system-ui, sans-serif;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* Subtil papir-/grain-struktur overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  .dark body::before {
+    opacity: 0.035;
+  }
+
+  /* Tabular numbers across math and numbers */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Custom teal focus-ring */
+  :focus-visible {
+    outline: 2px solid var(--ring) !important;
+    outline-offset: 2px !important;
+  }
+}
+
+/* Fluid Typography Helpers */
+.fluid-title {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.fluid-subtitle {
+  font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+  line-height: 1.4;
+}
+
+/* Print CSS */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 15mm;
+  }
+
+  html, body {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    font-size: 11pt;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  body::before {
+    display: none !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .worksheet-page {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    width: 100% !important;
+    break-inside: avoid;
+  }
+
+  .worksheet-page:not(:last-child) {
+    break-after: page;
+    page-break-after: always;
+  }
+
+  .opgave-item {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
+
+@media screen {
+  .print-only {
+    display: none !important;
+  }
+}

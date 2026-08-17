@@ -1,0 +1,135 @@
+import React from 'react';
+import { Opgave } from '../engine/types';
+import { TaskItem } from './TaskItem';
+import logoPrint from '../assets/logo-print.png';
+import logoPrintLille from '../assets/logo-print-lille.png';
+
+type WorksheetPageProps = {
+  pageIndex: number;
+  totalPages: number;
+  opgaver: Opgave[];
+  startIndex: number;
+  kolonner: number;
+  viewMode: 'opgaver' | 'facit';
+  isInteractive: boolean;
+  userAnswers: Record<number, string>;
+  hasChecked: boolean;
+  onAnswerChange: (index: number, value: string) => void;
+};
+
+export const WorksheetPage: React.FC<WorksheetPageProps> = ({
+  pageIndex,
+  totalPages,
+  opgaver,
+  startIndex,
+  kolonner,
+  viewMode,
+  isInteractive,
+  userAnswers,
+  hasChecked,
+  onAnswerChange,
+}) => {
+  // Grid column classes
+  const getGridColsClass = (cols: number) => {
+    switch (cols) {
+      case 2:
+        return 'grid-cols-1 sm:grid-cols-2';
+      case 3:
+        return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3';
+      case 4:
+        return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-4';
+      case 5:
+        return 'grid-cols-2 sm:grid-cols-3 md:grid-cols-5';
+      case 6:
+        return 'grid-cols-2 sm:grid-cols-3 md:grid-cols-6';
+      default:
+        return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-4';
+    }
+  };
+
+  return (
+    <div className="worksheet-page bg-background text-foreground rounded-2xl p-6 sm:p-8 lg:p-10 transition-colors duration-200 flex flex-col justify-between min-h-[500px]">
+      {/* Top Page Header */}
+      <div>
+        <div className="flex items-start justify-between border-b border-border/80 pb-4 mb-6 gap-4">
+          <div className="flex-1">
+            <div className="flex items-center gap-3">
+              <img
+                src={logoPrint}
+                alt="Talværksted"
+                className="print-only h-9 w-auto object-contain"
+              />
+              <div>
+                <h2 className="font-bold text-lg sm:text-xl tracking-tight text-foreground">
+                  {viewMode === 'facit' ? 'Talværksted — Facitark' : 'Talværksted — Opgaveark'}
+                </h2>
+                {totalPages > 1 && (
+                  <p className="text-xs text-muted-foreground font-mono">
+                    Side {pageIndex + 1} af {totalPages}
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Student fill-in info (Navn, Klasse, Dato) */}
+          <div className="flex items-center gap-4 text-xs font-mono text-foreground/80 flex-shrink-0">
+            <div className="flex items-center gap-1.5">
+              <span className="font-semibold text-muted-foreground">Navn:</span>
+              <span className="border-b border-foreground/40 w-24 sm:w-32 inline-block" />
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="font-semibold text-muted-foreground">Klasse:</span>
+              <span className="border-b border-foreground/40 w-12 sm:w-16 inline-block" />
+            </div>
+            <div className="flex items-center gap-1.5 hidden xs:flex">
+              <span className="font-semibold text-muted-foreground">Dato:</span>
+              <span className="border-b border-foreground/40 w-16 sm:w-20 inline-block" />
+            </div>
+          </div>
+        </div>
+
+        {/* Task Grid */}
+        <div className={`grid ${getGridColsClass(kolonner)} gap-x-4 gap-y-3 sm:gap-y-4`}>
+          {opgaver.map((opgave, idx) => {
+            const globalIndex = startIndex + idx;
+            return (
+              <TaskItem
+                key={`${pageIndex}-${globalIndex}-${opgave.template}`}
+                index={globalIndex}
+                opgave={opgave}
+                viewMode={viewMode}
+                isInteractive={isInteractive}
+                userAnswer={userAnswers[globalIndex] || ''}
+                hasChecked={hasChecked}
+                onAnswerChange={onAnswerChange}
+              />
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Page Footer (Signature & Slogan) */}
+      <div className="mt-8 pt-4 border-t border-border/60 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-muted-foreground">
+        <div className="flex items-center gap-2">
+          <img
+            src={logoPrintLille}
+            alt=""
+            className="print-only h-4 w-auto object-contain"
+          />
+          <span>Jacob Witt-Larsen · Master i IT og Læring (MIL)</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <span className="italic font-medium">
+            Bygget med Sandboxmodellen · Tænk før du klikker, men klik.
+          </span>
+          {totalPages > 1 && (
+            <span className="font-mono font-semibold">
+              [{pageIndex + 1}/{totalPages}]
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
