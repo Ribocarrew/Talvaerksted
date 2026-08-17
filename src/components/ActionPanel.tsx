@@ -6,6 +6,7 @@ import {
   Eye,
   CheckSquare,
   RotateCcw,
+  Info,
 } from 'lucide-react';
 
 type ActionPanelProps = {
@@ -153,7 +154,7 @@ export const ActionPanel: React.FC<ActionPanelProps> = ({
           )}
 
           {/* Share & Print Toolbar */}
-          <div className="pt-2 border-t border-border/60 space-y-2">
+          <div className="pt-2 border-t border-border/60 space-y-2.5">
             <button
               type="button"
               onClick={onCopyShareLink}
@@ -180,6 +181,17 @@ export const ActionPanel: React.FC<ActionPanelProps> = ({
                 <Printer className="w-3.5 h-3.5 text-primary" />
                 <span>Print facit</span>
               </button>
+            </div>
+
+            {/* Reminder tip box about printing answers before generating new sheet */}
+            <div className="p-2.5 rounded-xl bg-warning/10 border border-warning/30 text-[11px] text-foreground space-y-1">
+              <div className="font-semibold flex items-center gap-1.5 text-amber-700 dark:text-amber-300">
+                <Info className="w-3.5 h-3.5 flex-shrink-0" />
+                <span>Husk facitarket:</span>
+              </div>
+              <p className="leading-tight text-muted-foreground">
+                Husk at printe facitarket med, hvis du skal bruge det. Hvis du genererer et nyt arbejdsark, får du et helt nyt sæt opgaver og facit.
+              </p>
             </div>
           </div>
         </div>

@@ -13,6 +13,7 @@ type WorksheetPreviewProps = {
   isInteractive: boolean;
   userAnswers: Record<number, string>;
   hasChecked: boolean;
+  generationDate: string;
   onAnswerChange: (index: number, value: string) => void;
 };
 
@@ -25,6 +26,7 @@ export const WorksheetPreview: React.FC<WorksheetPreviewProps> = ({
   isInteractive,
   userAnswers,
   hasChecked,
+  generationDate,
   onAnswerChange,
 }) => {
   // Empty state
@@ -95,6 +97,7 @@ export const WorksheetPreview: React.FC<WorksheetPreviewProps> = ({
                   isInteractive={isInteractive}
                   userAnswers={userAnswers}
                   hasChecked={hasChecked}
+                  generationDate={generationDate}
                   onAnswerChange={onAnswerChange}
                 />
               </div>

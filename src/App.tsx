@@ -47,6 +47,9 @@ export function App() {
   const [kolonner, setKolonner] = useState<number>(4);
   const [raekkerPrSide, setRaekkerPrSide] = useState<number>(18);
   const [activePreset, setActivePreset] = useState<DifficultyPreset | null>('mellem');
+  const [generationDate, setGenerationDate] = useState<string>(() =>
+    new Date().toLocaleDateString('da-DK', { day: '2-digit', month: '2-digit', year: 'numeric' })
+  );
 
   // Task selection & parameters
   const [activeTaskIds, setActiveTaskIds] = useState<string[]>(['addition', 'multiplikation']);
@@ -104,6 +107,9 @@ export function App() {
       setHasGenerated(true);
       setUserAnswers({});
       setHasChecked(false);
+      setGenerationDate(
+        new Date().toLocaleDateString('da-DK', { day: '2-digit', month: '2-digit', year: 'numeric' })
+      );
 
       // Update URL with state without page reload
       const stateObj: SavedUrlState = {
@@ -272,6 +278,15 @@ export function App() {
     setViewMode(mode);
     setIsInteractive(false);
 
+    if (mode === 'opgaver') {
+      showToast(
+        'Husk at printe facitarket også, hvis du skal bruge det! Facitarket forsvinder, hvis du genererer et nyt arbejdsark.',
+        'warning',
+        'Husk facitarket',
+        7000
+      );
+    }
+
     setTimeout(() => {
       window.print();
       setTimeout(() => {
@@ -406,6 +421,7 @@ export function App() {
               isInteractive={isInteractive}
               userAnswers={userAnswers}
               hasChecked={hasChecked}
+              generationDate={generationDate}
               onAnswerChange={handleAnswerChange}
             />
           </section>

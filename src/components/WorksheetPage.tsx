@@ -14,6 +14,7 @@ type WorksheetPageProps = {
   isInteractive: boolean;
   userAnswers: Record<number, string>;
   hasChecked: boolean;
+  generationDate: string;
   onAnswerChange: (index: number, value: string) => void;
 };
 
@@ -27,6 +28,7 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
   isInteractive,
   userAnswers,
   hasChecked,
+  generationDate,
   onAnswerChange,
 }) => {
   // Grid column classes
@@ -72,7 +74,7 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
             </div>
           </div>
 
-          {/* Student fill-in info (Navn, Klasse, Dato) */}
+          {/* Student fill-in info (Navn, Klasse, Automatisk udfyldt Dato) */}
           <div className="flex items-center gap-3 sm:gap-4 text-xs font-mono text-foreground/90 print:text-black flex-shrink-0">
             <div className="flex items-center gap-1.5">
               <span className="font-semibold text-muted-foreground print:text-gray-700">Navn:</span>
@@ -84,7 +86,9 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
             </div>
             <div className="flex items-center gap-1.5">
               <span className="font-semibold text-muted-foreground print:text-gray-700">Dato:</span>
-              <span className="border-b border-foreground/40 print:border-black w-16 sm:w-20 print:w-16 inline-block" />
+              <span className="font-semibold text-foreground print:text-black font-mono border-b border-foreground/40 print:border-black min-w-[75px] text-center inline-block px-1">
+                {generationDate}
+              </span>
             </div>
           </div>
         </div>
