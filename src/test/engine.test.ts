@@ -211,4 +211,15 @@ describe('Opgavemotor Verifikation', () => {
     });
     expect(url).toContain('?d=');
   });
+
+  // 11. Stort opgavesæt (f.eks. 500 opgaver)
+  it('Generering af store opgavesæt (500 opgaver)', () => {
+    const aktive = [
+      { id: 'multiplikation', generer: OPGAVETYPER_MAP.get('multiplikation')!.generer, params: { antalLed: 2, talMin: 1, talMax: 50, negativtal: false } },
+      { id: 'addition', generer: OPGAVETYPER_MAP.get('addition')!.generer, params: { antalLed: 2, talMin: 1, talMax: 100, negativtal: false } },
+    ];
+    const { opgaver, reachedLimit } = genererArbejdsark(777777, aktive, 500);
+    expect(opgaver.length).toBe(500);
+    expect(reachedLimit).toBe(false);
+  });
 });

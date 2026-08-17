@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Sliders, Columns, FileText, Hash } from 'lucide-react';
 
 type GlobalSettingsProps = {
@@ -18,8 +18,34 @@ export const GlobalSettings: React.FC<GlobalSettingsProps> = ({
   onChangeKolonner,
   onChangeRaekkerPrSide,
 }) => {
-  const opgavePresets = [12, 24, 36, 48, 72];
+  const [inputValue, setInputValue] = useState<string>(antalOpgaver.toString());
+  const opgavePresets = [12, 24, 50, 100, 250, 500];
   const kolonneValg = [1, 2, 3];
+
+  useEffect(() => {
+    setInputValue(antalOpgaver.toString());
+  }, [antalOpgaver]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setInputValue(val);
+    const parsed = parseInt(val, 10);
+    if (!isNaN(parsed) && parsed > 0) {
+      onChangeAntalOpgaver(Math.min(1000, parsed));
+    }
+  };
+
+  const handleInputBlur = () => {
+    const parsed = parseInt(inputValue, 10);
+    if (isNaN(parsed) || parsed < 1) {
+      setInputValue('24');
+      onChangeAntalOpgaver(24);
+    } else {
+      const clamped = Math.min(1000, Math.max(1, parsed));
+      setInputValue(clamped.toString());
+      onChangeAntalOpgaver(clamped);
+    }
+  };
 
   return (
     <div className="rounded-2xl border border-border/80 bg-background p-4 sm:p-5 space-y-4 shadow-xs">
@@ -37,27 +63,33 @@ export const GlobalSettings: React.FC<GlobalSettingsProps> = ({
             <Hash className="w-3.5 h-3.5 text-muted-foreground" />
             Antal opgaver i alt:
           </label>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1.5">
             <input
               type="number"
-              min={4}
-              max={120}
-              aria-label="Antal opgaver i alt"
-              value={antalOpgaver}
-              onChange={(e) => onChangeAntalOpgaver(Math.min(120, Math.max(4, parseInt(e.target.value) || 4)))}
-              className="w-16 px-2 py-1 rounded-lg border border-border bg-secondary/30 text-foreground font-mono text-center text-xs font-bold focus:ring-1 focus:ring-primary"
+              min={1}
+              max={1000}
+              aria-label="Antal opgaver i alt (skriv et vilkårligt antal, f.eks. 100 eller 500)"
+              value={inputValue}
+              onChange={handleInputChange}
+              onBlur={handleInputBlur}
+              placeholder="f.eks. 100"
+              className="w-24 px-2.5 py-1 rounded-lg border border-border bg-secondary/30 text-foreground font-mono text-center text-xs font-bold focus:ring-1 focus:ring-primary"
             />
+            <span className="text-[11px] text-muted-foreground">stk.</span>
           </div>
         </div>
 
         {/* Quick select pills */}
-        <div className="flex items-center gap-1.5 pt-0.5">
+        <div className="grid grid-cols-6 gap-1 pt-0.5">
           {opgavePresets.map((val) => (
             <button
               key={val}
               type="button"
-              onClick={() => onChangeAntalOpgaver(val)}
-              className={`flex-1 py-1 rounded-lg text-xs font-mono font-medium border transition-colors ${
+              onClick={() => {
+                setInputValue(val.toString());
+                onChangeAntalOpgaver(val);
+              }}
+              className={`py-1 rounded-lg text-xs font-mono font-medium border transition-colors text-center ${
                 antalOpgaver === val
                   ? 'bg-primary text-primary-foreground border-primary font-bold shadow-xs'
                   : 'bg-secondary/40 border-border/70 text-foreground hover:bg-secondary'
@@ -67,6 +99,9 @@ export const GlobalSettings: React.FC<GlobalSettingsProps> = ({
             </button>
           ))}
         </div>
+        <p className="text-[10px] text-muted-foreground">
+          Skriv et vilkårligt antal i feltet (f.eks. 100, 200 eller 500 stykker).
+        </p>
       </div>
 
       {/* Kolonner (1, 2 eller 3) */}
@@ -109,10 +144,10 @@ export const GlobalSettings: React.FC<GlobalSettingsProps> = ({
           <input
             type="number"
             min={4}
-            max={40}
+            max={50}
             aria-label="Rækker pr. printside"
             value={raekkerPrSide}
-            onChange={(e) => onChangeRaekkerPrSide(Math.min(40, Math.max(4, parseInt(e.target.value) || 4)))}
+            onChange={(e) => onChangeRaekkerPrSide(Math.min(50, Math.max(4, parseInt(e.target.value, 10) || 4)))}
             className="w-16 px-2 py-1 rounded-lg border border-border bg-secondary/30 text-foreground font-mono text-center text-xs font-bold focus:ring-1 focus:ring-primary"
           />
         </div>
