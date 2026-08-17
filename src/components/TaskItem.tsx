@@ -51,19 +51,19 @@ export const TaskItem: React.FC<TaskItemProps> = ({
   const suffix = parts[1] || '';
 
   return (
-    <div className="opgave-item flex items-baseline gap-2 py-2 px-2.5 rounded-xl transition-colors hover:bg-secondary/20 break-inside-avoid">
+    <div className="opgave-item flex items-baseline gap-2 py-1.5 sm:py-2 px-2 sm:px-2.5 rounded-xl print:rounded-none print:bg-transparent print:p-0 print:py-1 transition-colors hover:bg-secondary/20 break-inside-avoid">
       {/* Index marker */}
-      <span className="text-xs font-mono font-bold text-muted-foreground/70 select-none min-w-[24px]">
+      <span className="text-xs font-mono font-bold text-muted-foreground/70 print:text-black/70 select-none min-w-[24px]">
         {index + 1}.
       </span>
 
       {/* Math Expression */}
-      <div className="flex-1 font-mono text-sm sm:text-[15px] font-medium text-foreground tracking-tight flex items-baseline flex-wrap gap-1 tabular-nums">
+      <div className="flex-1 font-mono text-sm sm:text-[15px] font-medium text-foreground print:text-black tracking-tight flex items-baseline flex-wrap gap-1 tabular-nums">
         <span>{prefix}</span>
 
         {/* Dynamic answer slot */}
         {viewMode === 'facit' ? (
-          <span className="font-bold text-primary px-1 border-b-2 border-primary/50">
+          <span className="font-bold text-primary print:text-black px-1 border-b-2 border-primary/50 print:border-black">
             {formattedFacit}
           </span>
         ) : isInteractive ? (
@@ -84,10 +84,10 @@ export const TaskItem: React.FC<TaskItemProps> = ({
               }`}
             />
             {/* Print fallback line when interactive mode is printed */}
-            <span className="print-only border-b border-foreground/60 w-16 inline-block" />
+            <span className="print-only border-b border-black w-14 inline-block" />
           </span>
         ) : (
-          <span className="border-b-2 border-foreground/50 w-14 sm:w-16 inline-block mx-0.5 select-none" />
+          <span className="border-b-2 border-foreground/50 print:border-black w-14 sm:w-16 print:w-14 inline-block mx-0.5 select-none" />
         )}
 
         <span>{suffix}</span>

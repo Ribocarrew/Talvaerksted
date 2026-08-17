@@ -51,7 +51,7 @@ export const WorksheetPreview: React.FC<WorksheetPreviewProps> = ({
   const totalPages = sider.length;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 print:space-y-0 print:m-0 print:p-0">
       {/* Small sample space alert if limited */}
       {reachedLimit && (
         <div className="no-print flex items-center gap-2.5 p-3.5 rounded-xl bg-amber-500/10 border border-warning text-foreground text-xs animate-in fade-in">
@@ -78,13 +78,13 @@ export const WorksheetPreview: React.FC<WorksheetPreviewProps> = ({
       )}
 
       {/* Stacked Pages Container */}
-      <div className="space-y-6">
+      <div className="space-y-6 print:space-y-0">
         {sider.map((sideOpgaver, pageIdx) => {
           const startIndex = pageIdx * (raekkerPrSide * kolonner);
           return (
-            <div key={`page-${pageIdx}`} className="relative">
-              {/* Floating Sheet Container with Teal Shadow */}
-              <div className="rounded-2xl border border-border/80 shadow-elevated dark:shadow-elevated-dark bg-background overflow-hidden">
+            <div key={`page-${pageIdx}`} className="relative print:m-0 print:p-0">
+              {/* Floating Sheet Container with Teal Shadow on screen, unbordered on print */}
+              <div className="worksheet-outer-card rounded-2xl border border-border/80 shadow-elevated dark:shadow-elevated-dark bg-background overflow-hidden print:border-0 print:shadow-none print:bg-white print:rounded-none print:overflow-visible print:m-0 print:p-0">
                 <WorksheetPage
                   pageIndex={pageIdx}
                   totalPages={totalPages}

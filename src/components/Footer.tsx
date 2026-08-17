@@ -15,7 +15,7 @@ export const Footer: React.FC = () => {
         </p>
       </div>
       <p className="text-xs italic text-muted-foreground">
-        Bygget med Sandboxmodellen · Tænk før du klikker, men klik.
+        Tænk før du klikker, men klik.
       </p>
       <p className="text-[11px] text-muted-foreground/70 pt-1">
         100 % klient-side · Ingen sporing eller cookies · Gemmer kun mørkt tema lokalt

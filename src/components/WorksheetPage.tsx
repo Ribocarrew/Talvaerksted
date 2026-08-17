@@ -33,25 +33,25 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
   const getGridColsClass = (cols: number) => {
     switch (cols) {
       case 2:
-        return 'grid-cols-1 sm:grid-cols-2';
+        return 'grid-cols-1 sm:grid-cols-2 print:grid-cols-2';
       case 3:
-        return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3';
+        return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 print:grid-cols-3';
       case 4:
-        return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-4';
+        return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-4 print:grid-cols-4';
       case 5:
-        return 'grid-cols-2 sm:grid-cols-3 md:grid-cols-5';
+        return 'grid-cols-2 sm:grid-cols-3 md:grid-cols-5 print:grid-cols-5';
       case 6:
-        return 'grid-cols-2 sm:grid-cols-3 md:grid-cols-6';
+        return 'grid-cols-2 sm:grid-cols-3 md:grid-cols-6 print:grid-cols-6';
       default:
-        return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-4';
+        return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-4 print:grid-cols-4';
     }
   };
 
   return (
-    <div className="worksheet-page bg-background text-foreground rounded-2xl p-6 sm:p-8 lg:p-10 transition-colors duration-200 flex flex-col justify-between min-h-[500px]">
+    <div className="worksheet-page bg-background text-foreground rounded-2xl p-6 sm:p-8 lg:p-10 print:p-0 print:m-0 print:rounded-none print:border-none print:bg-white print:text-black transition-colors duration-200 flex flex-col justify-between min-h-[500px]">
       {/* Top Page Header */}
       <div>
-        <div className="flex items-start justify-between border-b border-border/80 pb-4 mb-6 gap-4">
+        <div className="flex items-end justify-between border-b border-border/80 print:border-black/30 pb-3 mb-6 gap-4">
           <div className="flex-1">
             <div className="flex items-center gap-3">
               <img
@@ -60,11 +60,11 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
                 className="print-only h-9 w-auto object-contain"
               />
               <div>
-                <h2 className="font-bold text-lg sm:text-xl tracking-tight text-foreground">
+                <h2 className="font-bold text-lg sm:text-xl tracking-tight text-foreground print:text-black">
                   {viewMode === 'facit' ? 'Talværksted — Facitark' : 'Talværksted — Opgaveark'}
                 </h2>
                 {totalPages > 1 && (
-                  <p className="text-xs text-muted-foreground font-mono">
+                  <p className="text-xs text-muted-foreground print:text-gray-600 font-mono">
                     Side {pageIndex + 1} af {totalPages}
                   </p>
                 )}
@@ -73,24 +73,24 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
           </div>
 
           {/* Student fill-in info (Navn, Klasse, Dato) */}
-          <div className="flex items-center gap-4 text-xs font-mono text-foreground/80 flex-shrink-0">
+          <div className="flex items-center gap-3 sm:gap-4 text-xs font-mono text-foreground/90 print:text-black flex-shrink-0">
             <div className="flex items-center gap-1.5">
-              <span className="font-semibold text-muted-foreground">Navn:</span>
-              <span className="border-b border-foreground/40 w-24 sm:w-32 inline-block" />
+              <span className="font-semibold text-muted-foreground print:text-gray-700">Navn:</span>
+              <span className="border-b border-foreground/40 print:border-black w-24 sm:w-28 print:w-28 inline-block" />
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="font-semibold text-muted-foreground">Klasse:</span>
-              <span className="border-b border-foreground/40 w-12 sm:w-16 inline-block" />
+              <span className="font-semibold text-muted-foreground print:text-gray-700">Klasse:</span>
+              <span className="border-b border-foreground/40 print:border-black w-12 sm:w-16 print:w-14 inline-block" />
             </div>
-            <div className="flex items-center gap-1.5 hidden xs:flex">
-              <span className="font-semibold text-muted-foreground">Dato:</span>
-              <span className="border-b border-foreground/40 w-16 sm:w-20 inline-block" />
+            <div className="flex items-center gap-1.5">
+              <span className="font-semibold text-muted-foreground print:text-gray-700">Dato:</span>
+              <span className="border-b border-foreground/40 print:border-black w-16 sm:w-20 print:w-16 inline-block" />
             </div>
           </div>
         </div>
 
         {/* Task Grid */}
-        <div className={`grid ${getGridColsClass(kolonner)} gap-x-4 gap-y-3 sm:gap-y-4`}>
+        <div className={`grid ${getGridColsClass(kolonner)} gap-x-5 gap-y-3 sm:gap-y-4 print:gap-x-6 print:gap-y-2.5`}>
           {opgaver.map((opgave, idx) => {
             const globalIndex = startIndex + idx;
             return (
@@ -110,7 +110,7 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
       </div>
 
       {/* Page Footer (Signature & Slogan) */}
-      <div className="mt-8 pt-4 border-t border-border/60 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-muted-foreground">
+      <div className="mt-8 pt-3 border-t border-border/60 print:border-black/20 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-muted-foreground print:text-gray-700">
         <div className="flex items-center gap-2">
           <img
             src={logoPrintLille}
@@ -121,7 +121,7 @@ export const WorksheetPage: React.FC<WorksheetPageProps> = ({
         </div>
         <div className="flex items-center gap-3">
           <span className="italic font-medium">
-            Bygget med Sandboxmodellen · Tænk før du klikker, men klik.
+            Tænk før du klikker, men klik.
           </span>
           {totalPages > 1 && (
             <span className="font-mono font-semibold">

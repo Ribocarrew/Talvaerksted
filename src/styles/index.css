@@ -102,15 +102,19 @@
 @media print {
   @page {
     size: A4 portrait;
-    margin: 15mm;
+    margin: 12mm 15mm;
   }
 
   html, body {
+    background: #FFFFFF !important;
     background-color: #FFFFFF !important;
     color: #000000 !important;
     font-size: 11pt;
     margin: 0 !important;
     padding: 0 !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    height: auto !important;
   }
 
   body::before {
@@ -125,14 +129,55 @@
     display: block !important;
   }
 
+  /* Reset layout constraints for print */
+  main, section, aside, div {
+    max-width: 100% !important;
+    box-shadow: none !important;
+  }
+
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  main > div.grid {
+    display: block !important;
+    width: 100% !important;
+    gap: 0 !important;
+  }
+
+  section {
+    width: 100% !important;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Completely remove outer card border, background and shadow in print */
+  .worksheet-outer-card {
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
   .worksheet-page {
     box-shadow: none !important;
     border: none !important;
+    border-radius: 0 !important;
     padding: 0 !important;
     margin: 0 !important;
     background: #FFFFFF !important;
     color: #000000 !important;
     width: 100% !important;
+    min-height: calc(100vh - 24mm) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
     break-inside: avoid;
   }
 
@@ -144,6 +189,10 @@
   .opgave-item {
     break-inside: avoid;
     page-break-inside: avoid;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 }
 
